@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Meteor : MeteorBase
 {
-    protected override int health => 5;
+    protected override int health => 1;
     protected override int speed => 3
     ;
     protected virtual void Awake()

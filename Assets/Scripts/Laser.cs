@@ -4,18 +4,17 @@ using UnityEngine;
 
 public class Laser : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public float speed = 8f;
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.up * Time.deltaTime * 8f);
+        transform.Translate(Vector3.up * Time.deltaTime * speed);
 
-        if (transform.position.y > 11f)
+        if (transform.position.y > GameManager.Instance.verticalScreenLimit)
         {
             Destroy(this.gameObject);
         }

@@ -6,6 +6,17 @@ public class ObjectManager : MonoBehaviour
     public GameObject playerPrefab;
     public GameObject meteorPrefab;
     public GameObject bigMeteorPrefab;
+    public static ObjectManager Instance { get; private set; }
+
+    void Awake()
+    {
+        if (Instance != null && Instance != this)
+    {
+        Destroy(gameObject);
+        return;
+    }
+    Instance = this;
+    }
 
     void Start()
     {
