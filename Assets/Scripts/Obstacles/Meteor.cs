@@ -2,17 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BigMeteor : MeteorBase
+public class Meteor : MeteorBase
 {
     protected override int health => 5;
-    protected override int speed => 2;
-    protected virtual void awake()
+    protected override int speed => 3
+    ;
+    protected virtual void Awake()
     {
-        base.awake();
+        base.Awake();
+        Debug.Log($"Meteor Instantiaed: {health} ");
     }
-
     protected override void Update()
     {
         base.Update();
     }
+    
 }

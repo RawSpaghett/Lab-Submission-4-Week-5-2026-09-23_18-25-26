@@ -6,15 +6,17 @@ public abstract class MeteorBase: MonoBehaviour
     protected abstract int health {get;}
     protected abstract int speed {get;}
     protected GameManager gameManager;
+    protected ObjectManager objectManager;
 
-    protected  virtual void awake()
+    protected virtual void Awake()
     {
-        GameObject.Find("GameManager").GetComponent<GameManager>().meteorCount++;
+        objectManager = GameObject.Find("GameManager").GetComponent<ObjectManager>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
     
     protected virtual void Update()
     {
-        transform.Translate(Vector3.down * Time.deltaTime * 2f);
+        transform.Translate(Vector3.down * Time.deltaTime * speed);
 
         if (transform.position.y < -11f)
         {
@@ -24,20 +26,23 @@ public abstract class MeteorBase: MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D whatIHit)
     {
-        if (whatIHit.tag == "Player")
+        if (whatIHit.CompareTag("Player"))
         {
+            Debug.Log($"Player Destroyed!");
             gameManager.gameOver = true;
             Destroy(whatIHit.gameObject);
             Destroy(this.gameObject);
-        } else if (whatIHit.tag == "Laser")
+        } else if (whatIHit.CompareTag("Laser"))
         {
             hitCount++;
+            Debug.Log($"Hit! Laser {hitCount}");
             Destroy(whatIHit.gameObject);
         }
         if (hitCount >= health)
         {
             Destroy(this.gameObject);
-            gameManager.meteorCount++;
+            Debug.Log($"Meteor Destroyed!");
+            objectManager.meteorCount++;
         }
     }
 }
