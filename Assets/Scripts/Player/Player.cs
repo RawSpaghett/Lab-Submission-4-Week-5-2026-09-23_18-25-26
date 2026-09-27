@@ -1,19 +1,18 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
     public GameObject laserPrefab;
 
+    //take in references to payer input actions
+    public InputActionReference moveAction;
+    public InputActionReference fireAction;
+
     private float speed = 6f;
     private bool canShoot = true;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
@@ -24,7 +23,8 @@ public class Player : MonoBehaviour
 
     void Movement()
     {
-        transform.Translate(new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0) * Time.deltaTime * speed);
+        //replace old input value check with new input system 
+        transform.Translate((Vector3)moveAction.action.ReadValue<Vector2>() * Time.deltaTime * speed);
         if (transform.position.x > GameManager.Instance.horizontalScreenLimit || transform.position.x <= -GameManager.Instance.horizontalScreenLimit)
         {
             transform.position = new Vector3(transform.position.x * -1f, transform.position.y, 0);
@@ -37,7 +37,8 @@ public class Player : MonoBehaviour
 
     void Shooting()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && canShoot)
+        //replace old input Input.GetKey with new input check for if an action was fired
+        if (fireAction.action.WasPressedThisFrame() && canShoot)
         {
             Instantiate(laserPrefab, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
             canShoot = false;
