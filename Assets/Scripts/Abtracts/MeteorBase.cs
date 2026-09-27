@@ -42,6 +42,8 @@ public abstract class MeteorBase: MonoBehaviour
         {
             Destroy(this.gameObject);
             Debug.Log($"Meteor Destroyed!");
+            CameraManager cameraManager = FindFirstObjectByType<CameraManager>();
+            cameraManager.SetShake(1f,0.5f);
             objectManager.meteorCount++;
         }
     }

@@ -20,7 +20,11 @@ public class ObjectManager : MonoBehaviour
 
     void Start()
     {
-        Instantiate(playerPrefab, transform.position, Quaternion.identity);
+        GameObject player = Instantiate(playerPrefab, transform.position, Quaternion.identity);
+
+        CameraManager cameraManager = FindFirstObjectByType<CameraManager>();
+        cameraManager.SetFollowTarget(player.transform);
+
         InvokeRepeating("SpawnMeteor", 1f, 2f);
     }
 
