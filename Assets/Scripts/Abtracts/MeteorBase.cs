@@ -42,6 +42,7 @@ public abstract class MeteorBase: MonoBehaviour
         {
             Destroy(this.gameObject);
             Debug.Log($"Meteor Destroyed!");
+            //whenever the meteor is destroyed, find the camera and set that thang
             CameraManager cameraManager = FindFirstObjectByType<CameraManager>();
             cameraManager.SetShake(1f,0.5f);
             objectManager.meteorCount++;
